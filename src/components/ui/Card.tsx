@@ -4,11 +4,9 @@ import { cn } from "@/lib/utils"
 
 function Card(
   { className, ...props }: React.ComponentProps<"div">,
-  ref: React.ForwardedRef<HTMLDivElement> // remove if error
 ) {
   return (
     <div
-      ref={ref}
       data-slot="card"
       className={cn(
         'overflow-hidden rounded-md bg-card text-card-foreground shadow-sm',
@@ -21,11 +19,9 @@ function Card(
 
 function CardHeader(
   { className, ...props }: React.ComponentProps<"div">,
-  ref: React.ForwardedRef<HTMLDivElement> // remove if error
 ) {
   return (
     <div
-      ref={ref}
       data-slot="card-header"
       className={cn('flex flex-col p-6', className)}
       {...props}
@@ -35,11 +31,9 @@ function CardHeader(
 
 function CardTitle(
   { className, ...props }: React.ComponentProps<"div">,
-  ref: React.ForwardedRef<HTMLDivElement> // remove if error
 ) {
   return (
     <div
-      ref={ref}
       data-slot="card-title"
       className={cn('text-2xl font-semibold leading-none tracking-tight', className)}
       {...props}
@@ -49,11 +43,9 @@ function CardTitle(
 
 function CardDescription(
   { className, ...props }: React.ComponentProps<"div">,
-  ref: React.ForwardedRef<HTMLDivElement> // remove if error
 ) {
   return (
     <div
-      ref={ref}
       data-slot="card-description"
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
@@ -76,11 +68,9 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
 
 function CardContent(
   { className, ...props }: React.ComponentProps<"div">,
-  ref: React.ForwardedRef<HTMLDivElement> // remove if error
 ) {
   return (
     <div
-      ref={ref}
       data-slot="card-content"
       className={cn('p-6 pt-0', className)}
       {...props}
@@ -90,11 +80,9 @@ function CardContent(
 
 function CardFooter(
   { className, ...props }: React.ComponentProps<"div">,
-  ref: React.ForwardedRef<HTMLDivElement> // remove if error
 ) {
   return (
     <div
-      ref={ref}
       data-slot="card-footer"
       className={cn('flex items-center p-6 pt-0', className)}
       {...props}
