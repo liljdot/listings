@@ -4,7 +4,7 @@ const HomePage: React.FC = () => {
 
     return (
         <>
-            <div>
+            <div className="container py-4">
                 <h1>HomePage</h1>
                 <ListingList listings={[]} />
             </div>
