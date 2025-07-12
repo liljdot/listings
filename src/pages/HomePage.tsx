@@ -4,8 +4,10 @@ const HomePage: React.FC = () => {
 
     return (
         <>
-            <h1>HomePage</h1>
-            <ListingList listings={[]}/>
+            <div>
+                <h1>HomePage</h1>
+                <ListingList listings={[]} />
+            </div>
         </>
     )
 }

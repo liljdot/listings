@@ -8,7 +8,7 @@ const ListingCard: React.FC<Props> = () => {
 
     return (
         <>
-        
+            <h3>Listing Card</h3>
         </>
     )
 }

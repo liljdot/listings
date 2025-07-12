@@ -5,13 +5,14 @@ interface Props {
     listings: Listing[]
 }
 
-const ListingList: React.FC<Props> = ({listings}) => {
+const ListingList: React.FC<Props> = ({ listings }) => {
 
     return (
         <>
-         {
-            listings.map(listing => (<ListingCard listing={listing}/>))
-         }
+            <h2>Listing List</h2>
+            {
+                listings.map(listing => (<ListingCard listing={listing} />))
+            }
         </>
     )
 }
