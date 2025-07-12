@@ -1,4 +1,5 @@
 import ListingList from "@/features/listing/components/ListingList";
+// @ts-expect-error import from js file
 import { listings } from "@/api/data/listings.js"
 import type { Listing } from "@/features/listing/types";
 
