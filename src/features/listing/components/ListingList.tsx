@@ -9,10 +9,12 @@ const ListingList: React.FC<Props> = ({ listings }) => {
 
     return (
         <>
-            <h2>Listing List</h2>
-            {
-                listings.map(listing => (<ListingCard listing={listing} />))
-            }
+            <div>
+                <h2>Listing List</h2>
+                {
+                    listings.map(listing => (<ListingCard listing={listing} />))
+                }
+            </div>
         </>
     )
 }
