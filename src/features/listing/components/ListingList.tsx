@@ -9,10 +9,15 @@ const ListingList: React.FC<Props> = ({ listings }) => {
 
     return (
         <>
-            <div>
-                <h2>Listing List</h2>
+            <div className="flex flex-wrap justify-center gap-4">
                 {
-                    listings.map(listing => (<ListingCard listing={listing} />))
+                    listings.length
+                        ? listings.map(listing => (<ListingCard listing={listing} />))
+                        : (
+                            <p>
+                                No listings found.
+                            </p>
+                        )
                 }
             </div>
         </>
