@@ -1,5 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/Card";
 import type { Listing } from "../types";
+// @ts-expect-error import from js
 import { getImageUrl } from "@/lib/utils/images.js"
 
 interface Props {
