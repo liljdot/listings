@@ -12,12 +12,12 @@ import { cn } from '@/lib/utils';
 import type { DateRange } from 'react-day-picker';
 
 interface Props {
-    className: string
+    className?: string
     minDate: Date
     maxDate: Date
     onChange: (dates: DateRange) => void
     placeholder: string
-    value: DateRange
+    value?: DateRange
 }
 
 export const DateRangePicker: React.FC<Props> = ({
