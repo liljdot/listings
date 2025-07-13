@@ -14,7 +14,7 @@ import type { DateRange } from 'react-day-picker';
 interface Props {
     className?: string
     minDate: Date
-    maxDate: Date
+    maxDate?: Date
     onChange: (dates: DateRange) => void
     placeholder: string
     value?: DateRange

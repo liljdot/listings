@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/Card";
+import { Card, CardContent } from "@/components/ui";
 import type { Listing } from "../types";
 // @ts-expect-error import from js
 import { getImageUrl } from "@/lib/utils/images.js"
