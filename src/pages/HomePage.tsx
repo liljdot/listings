@@ -1,15 +1,20 @@
 import ListingList from "@/features/listing/components/ListingList";
 // @ts-expect-error import from js file
 import { listings, isListingAvailable } from "@/api/data/listings.js"
+// @ts-expect-error import from js file
+import api from "@/api"
 import type { Listing } from "@/features/listing/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
 import { Separator } from "@radix-ui/react-separator";
 import type { DateRange } from "react-day-picker";
 
 const typedListings = listings as Listing[]
+const typedApi = api as Axios.AxiosInstance
 
 const HomePage: React.FC = () => {
+    
+
     const [displayedListings, setDisplayedListings] = useState(typedListings)
 
     const handleFilters = (filters: {
@@ -45,6 +50,16 @@ const HomePage: React.FC = () => {
 
         setDisplayedListings(filteredListings);
     }
+
+    useEffect(() => {
+        const fetchListings = () => {
+            return typedApi.get<Listing[]>("/api/listings")
+            .then(res => console.log(res.data))
+        }
+
+        fetchListings()
+        return () => {}
+    }, [])
 
     return (
         <>
