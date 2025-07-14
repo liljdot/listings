@@ -14,7 +14,7 @@ const typedApi = api as Axios.AxiosInstance
 const HomePage: React.FC = () => {
     
 
-    const [displayedListings, setDisplayedListings] = useState<Listing[]>([])
+    const [listings, setListings] = useState<Listing[]>([])
 
     const handleFilters = (filters: {
         dates?: DateRange,
@@ -24,7 +24,7 @@ const HomePage: React.FC = () => {
         const { dates, guests, search } = filters;
 
         // Resets filters by using static listings
-        let filteredListings = displayedListings;
+        let filteredListings = listings;
 
         // Handles date range
         if (dates) {
@@ -47,13 +47,13 @@ const HomePage: React.FC = () => {
             );
         }
 
-        setDisplayedListings(filteredListings);
+        setListings(filteredListings);
     }
 
     useEffect(() => {
         const fetchListings = () => {
             return typedApi.get<Listing[]>("/api/listings")
-            .then(res => console.log(res.data))
+            .then(res => setListings(res.data))
         }
 
         fetchListings()
@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
                     <ListingFilters onChange={handleFilters} />
                     <Separator />
                 </div>
-                <ListingList listings={displayedListings} />
+                <ListingList listings={listings} />
             </div>
         </>
     )
