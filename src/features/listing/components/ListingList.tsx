@@ -12,7 +12,12 @@ const ListingList: React.FC<Props> = ({ listings }) => {
             <div className="flex flex-wrap justify-center gap-4">
                 {
                     listings.length
-                        ? listings.map(listing => (<ListingCard listing={listing} />))
+                        ? listings.map(listing => (
+                            <ListingCard
+                                key={listing.id}
+                                listing={listing}
+                            />
+                        ))
                         : (
                             <p>
                                 No listings found.
