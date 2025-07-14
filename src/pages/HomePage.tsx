@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
 import { Separator } from "@radix-ui/react-separator";
 import type { DateRange } from "react-day-picker";
+import { Spinner } from "@/components/ui";
 
 const typedApi = api as Axios.AxiosInstance
 
 const HomePage: React.FC = () => {
-    
+    const [isLoading, setIsLoading] = useState(true)
 
     const [listings, setListings] = useState<Listing[]>([])
 
@@ -53,11 +54,15 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         const fetchListings = () => {
             return typedApi.get<Listing[]>("/api/listings")
-            .then(res => setListings(res.data))
+                .then(res => setListings(res.data))
+                .catch()
+                .then(() => {
+                    setIsLoading(false)
+                })
         }
 
         fetchListings()
-        return () => {}
+        return () => { }
     }, [])
 
     return (
@@ -67,7 +72,12 @@ const HomePage: React.FC = () => {
                     <ListingFilters onChange={handleFilters} />
                     <Separator />
                 </div>
-                <ListingList listings={listings} />
+                {
+                    isLoading && <Spinner />
+                }
+                {
+                    !isLoading && <ListingList listings={listings} />
+                }
             </div>
         </>
     )
