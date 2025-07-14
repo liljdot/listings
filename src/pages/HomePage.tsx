@@ -14,6 +14,7 @@ const typedApi = api as Axios.AxiosInstance
 
 const HomePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true)
+    const [isError, setIsError] = useState(false)
 
     const [listings, setListings] = useState<Listing[]>([])
 
@@ -54,8 +55,15 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         const fetchListings = () => {
             return typedApi.get<Listing[]>("/api/listings")
-                .then(res => setListings(res.data))
-                .catch()
+                .then(res => {
+                    setListings(res.data)
+                    if (Math.random() > 0.8) {
+                        throw new Error()
+                    }
+                })
+                .catch(() => {
+                    setIsError(true)
+                })
                 .then(() => {
                     setIsLoading(false)
                 })
@@ -76,7 +84,14 @@ const HomePage: React.FC = () => {
                     isLoading && <Spinner />
                 }
                 {
-                    !isLoading && <ListingList listings={listings} />
+                    isError && <div>
+                        Something went wrong...
+                    </div>
+                }
+                {
+                    !isError &&
+                    !isLoading &&
+                    <ListingList listings={listings} />
                 }
             </div>
         </>
