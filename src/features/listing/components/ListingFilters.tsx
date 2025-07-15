@@ -41,7 +41,7 @@ const ListingFilters: React.FC<Props> = ({ onChange }) => {
                     onChange={setGuests}
                 />
                 <Button onClick={handleSubmit}>
-                    <Search className="size-4" />
+                    <Search className="h-4 w-4" />
                 </Button>
             </div>
         </>
