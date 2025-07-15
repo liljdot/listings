@@ -1,67 +1,48 @@
 import ListingList from "@/features/listing/components/ListingList";
 // @ts-expect-error import from js file
-import { isListingAvailable } from "@/api/data/listings.js"
-// @ts-expect-error import from js file
 import api from "@/api"
 import type { Listing } from "@/features/listing/types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
 import { Separator } from "@radix-ui/react-separator";
 import type { DateRange } from "react-day-picker";
 import { Spinner } from "@/components/ui";
+import type { AxiosInstance } from "axios";
+import axios from "axios";
 
-const typedApi = api as Axios.AxiosInstance
+const typedApi = api as AxiosInstance
 
 const HomePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
     const [listings, setListings] = useState<Listing[]>([])
+    const [filters, setFilters] = useState<{ search: string, guests: number, dates?: DateRange }>()
 
-    const handleFilters = (filters: {
-        dates?: DateRange,
-        guests?: number,
-        search?: string
-    }) => {
-        const { dates, guests, search } = filters;
-
-        // Resets filters by using static listings
-        let filteredListings = listings;
-
-        // Handles date range
-        if (dates) {
-            filteredListings = filteredListings.filter((listing) =>
-                isListingAvailable(listing, dates),
-            );
-        }
-
-        // Handles guests
-        if (guests) {
-            filteredListings = filteredListings.filter(
-                (listing) => guests <= listing.maxGuests,
-            );
-        }
-
-        // Handles search
-        if (search) {
-            filteredListings = filteredListings.filter((listing) =>
-                listing.name.toLowerCase().includes(search.toLowerCase()),
-            );
-        }
-
-        setListings(filteredListings);
-    }
+    const abortController = useRef<AbortController>(null)
 
     useEffect(() => {
+        abortController.current = new AbortController()
+
         const fetchListings = () => {
-            return typedApi.get<Listing[]>("/api/listings")
+            setIsLoading(true)
+            setIsError(false)
+            
+            return typedApi.get<Listing[]>("/api/listings", {
+                params: filters,
+                signal: abortController.current?.signal
+            })
                 .then(res => {
                     setListings(res.data)
                     if (Math.random() > 0.8) {
                         throw new Error()
                     }
                 })
-                .catch(() => {
+                .catch((err) => {
+                    if (axios.isCancel(err)) {
+                        return
+                    }
+                    
                     setIsError(true)
                 })
                 .then(() => {
@@ -70,14 +51,15 @@ const HomePage: React.FC = () => {
         }
 
         fetchListings()
-        return () => { }
-    }, [])
+
+        return () => abortController.current?.abort()
+    }, [filters])
 
     return (
         <>
             <div className="container py-4">
                 <div className="mb-4">
-                    <ListingFilters onChange={handleFilters} />
+                    <ListingFilters onChange={filters => setFilters(filters)} />
                     <Separator />
                 </div>
                 {
