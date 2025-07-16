@@ -1,10 +1,10 @@
 import { Card, CardContent } from "@/components/ui";
-import type { Listing } from "../types";
+import type { ListingForList } from "../types";
 import { DollarSign, Pin, Users } from "lucide-react";
 import ListingCardImages from "./ListingCardImages";
 
 interface Props {
-    listing: Listing
+    listing: ListingForList
 }
 
 const ListingCard: React.FC<Props> = ({ listing }) => {

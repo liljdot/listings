@@ -4,6 +4,9 @@ export interface Listing {
     images: string[]
     maxGuests: number
     price: number
+}
+
+interface ListingWithLocation extends Listing {
     location: {
         id: number
         country: string
@@ -12,3 +15,5 @@ export interface Listing {
         updatedAt: Date
     }
 }
+
+export type ListingForList = ListingWithLocation

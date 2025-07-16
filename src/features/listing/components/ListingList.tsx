@@ -1,8 +1,8 @@
-import type { Listing } from "../types";
+import type { ListingForList } from "../types";
 import ListingCard from "./ListingCard";
 
 interface Props {
-    listings: Listing[]
+    listings: ListingForList[]
 }
 
 const ListingList: React.FC<Props> = ({ listings }) => {
