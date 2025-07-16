@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
             <div className="container py-4">
                 <div className="mb-4">
                     <ListingFilters onChange={filters => setFilters(filters)} />
-                    <Separator className="my-4"/>
+                    <Separator className="my-4" />
                 </div>
                 {
                     isLoading && (
@@ -69,9 +69,11 @@ const HomePage: React.FC = () => {
                     )
                 }
                 {
-                    isError && <div>
-                        Something went wrong...
-                    </div>
+                    isError && (
+                        <div className="text-center">
+                            Something went wrong...
+                        </div>
+                    )
                 }
                 {
                     !isError &&
