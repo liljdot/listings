@@ -1,7 +1,7 @@
 import ListingList from "@/features/listing/components/ListingList";
 // @ts-expect-error import from js file
 import api from "@/api"
-import type { Listing } from "@/features/listing/types";
+import type { ListingForList } from "@/features/listing/types";
 import { useEffect, useRef, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
 import type { DateRange } from "react-day-picker";
@@ -15,7 +15,7 @@ const HomePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
-    const [listings, setListings] = useState<Listing[]>([])
+    const [listings, setListings] = useState<ListingForList[]>([])
     const [filters, setFilters] = useState<{ search: string, guests: number, dates?: DateRange }>()
 
     const abortController = useRef<AbortController>(null)
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
             setIsLoading(true)
             setIsError(false)
 
-            return typedApi.get<Listing[]>("/api/listings", {
+            return typedApi.get<ListingForList[]>("/api/listings", {
                 params: filters,
                 signal: abortController.current?.signal
             })
