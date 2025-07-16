@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
         const fetchListings = () => {
             setIsLoading(true)
             setIsError(false)
-            
+
             return typedApi.get<Listing[]>("/api/listings", {
                 params: filters,
                 signal: abortController.current?.signal
@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
                     if (axios.isCancel(err)) {
                         return
                     }
-                    
+
                     setIsError(true)
                 })
                 .then(() => {
@@ -60,10 +60,14 @@ const HomePage: React.FC = () => {
             <div className="container py-4">
                 <div className="mb-4">
                     <ListingFilters onChange={filters => setFilters(filters)} />
-                    <Separator />
+                    <Separator className="my-4"/>
                 </div>
                 {
-                    isLoading && <Spinner />
+                    isLoading && (
+                        <div className="flex justify-center">
+                            <Spinner size={"sm"} />
+                        </div>
+                    )
                 }
                 {
                     isError && <div>
