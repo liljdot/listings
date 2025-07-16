@@ -4,9 +4,8 @@ import api from "@/api"
 import type { Listing } from "@/features/listing/types";
 import { useEffect, useRef, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
-import { Separator } from "@radix-ui/react-separator";
 import type { DateRange } from "react-day-picker";
-import { Spinner } from "@/components/ui";
+import { Spinner, Separator } from "@/components/ui";
 import type { AxiosInstance } from "axios";
 import axios from "axios";
 
