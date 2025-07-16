@@ -2,6 +2,7 @@ export * from './Avatar';
 export * from "./Button"
 export * from "./Calendar"
 export * from './Card';
+export * from "./carousel"
 export * from "./DatePicker";
 export * from './Input';
 export * from "./Popover"
