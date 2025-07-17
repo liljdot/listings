@@ -21,6 +21,8 @@ const ListingDetailsPage: React.FC = () => {
         const abortController = new AbortController()
 
         const fetchListing = () => {
+            setError(null)
+
             typedApi.get<ListingForList>(`/api/listings/${listingId}`, {
                 signal: abortController.signal
             })
@@ -35,7 +37,7 @@ const ListingDetailsPage: React.FC = () => {
                     if (axios.isCancel(err)) {
                         return
                     }
-                    
+
                     setError(err.message || err)
                 })
                 .finally(() => {
@@ -48,25 +50,32 @@ const ListingDetailsPage: React.FC = () => {
         return () => abortController.abort()
     }, [listingId])
 
-    if (isLoading) {
-        return (
-            <div className="flex justify-center">
-                <Spinner />
-            </div>
-        )
-    }
-
-    if (error || !listing) {
-        return (
-            <div className="flex justify-center">
-                {error}
-            </div>
-        )
-    }
-
     return (
         <>
-            <ListingDetailsCard listing={listing} />
+            <div className="container py-4">
+                {
+                    isLoading && (
+                        <div className="flex justify-center">
+                            <Spinner size={"sm"} />
+                        </div>
+                    )
+                }
+
+                {
+                    error && (
+                        <div className="text-center">
+                            {error}
+                        </div>
+                    )
+                }
+
+                {
+                    !isLoading &&
+                    !error && (
+                        <ListingDetailsCard listing={listing!} />
+                    )
+                }
+            </div>
         </>
     )
 }
