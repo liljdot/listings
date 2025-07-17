@@ -42,13 +42,14 @@ function useCarousel() {
 
 function Carousel({
   orientation = "horizontal",
-  opts,
+  loop,
+  opts = { loop },
   setApi,
   plugins,
   className,
   children,
   ...props
-}: React.ComponentProps<"div"> & CarouselProps) {
+}: React.ComponentProps<"div"> & CarouselProps & { loop?: boolean }) {
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -151,7 +152,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({ children, className, isSelected, ...props }: React.ComponentProps<"div"> & { isSelected?: boolean }) {
   const { orientation } = useCarousel()
 
   return (
@@ -165,7 +166,16 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
         className
       )}
       {...props}
-    />
+    >
+      <div
+        className={cn(
+          'overflow-hidden rounded-md border-2 border-transparent',
+          isSelected && 'border-primary',
+        )}
+      >
+        {children}
+      </div>
+    </div>
   )
 }
 
