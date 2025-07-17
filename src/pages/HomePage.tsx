@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
 
                     setIsError(true)
                 })
-                .then(() => {
+                .finally(() => {
                     setIsLoading(false)
                 })
         }

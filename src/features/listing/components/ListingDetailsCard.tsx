@@ -9,6 +9,7 @@ const ListingDetailsCard: React.FC<Props> = ({ listing }) => {
     return (
         <>
             Listing Details Card
+            {listing.name}
         </>
     )
 }
