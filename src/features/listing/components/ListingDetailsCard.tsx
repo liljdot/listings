@@ -1,7 +1,6 @@
-import { Card } from "@/components/ui";
+import { Card, Separator } from "@/components/ui";
 import type { ListingForList } from "../types"
 import { DollarSign, Pin, Users } from "lucide-react";
-import { Separator } from "@radix-ui/react-separator";
 import ListingDetailsCardImages from "./ListingDetailsCardImages";
 
 interface Props {
@@ -14,6 +13,7 @@ const ListingDetailsCard: React.FC<Props> = ({ listing }) => {
         <>
             <Card className="mx-auto p-4">
                 <ListingDetailsCardImages listing={listing} />
+                <Separator className="mb-4" />
                 <div className='flex flex-col gap-2'>
                     <h1 className="mb-2 text-2xl font-bold">
                         {listing.name}
