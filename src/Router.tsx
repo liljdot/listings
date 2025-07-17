@@ -1,11 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import HomePage from "./pages/HomePage";
+import App from "./App";
 
 const Router: React.FC = () => {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <HomePage />
+            element: <App />,
+            children: [
+                {
+                    path: "/",
+                    element: <HomePage />
+                }
+            ]
         }
     ])
 
