@@ -4,6 +4,7 @@ export interface Listing {
     images: string[]
     maxGuests: number
     price: number
+    description: string
 }
 
 interface ListingWithLocation extends Listing {
