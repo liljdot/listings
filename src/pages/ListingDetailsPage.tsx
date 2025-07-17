@@ -6,6 +6,7 @@ import type { ListingForList } from "@/features/listing/types";
 import { useEffect, useState } from "react";
 import ListingDetailsCard from "@/features/listing/components/ListingDetailsCard";
 import { Spinner } from "@/components/ui";
+import axios from "axios";
 
 const typedApi = api as AxiosInstance
 
@@ -17,12 +18,12 @@ const ListingDetailsPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
-        if (!listingId) {
-            return
-        }
+        const abortController = new AbortController()
 
         const fetchListing = () => {
-            typedApi.get<ListingForList>(`/api/listings/${listingId}`)
+            typedApi.get<ListingForList>(`/api/listings/${listingId}`, {
+                signal: abortController.signal
+            })
                 .then(res => {
                     if (!res.data) {
                         throw new Error("Listing not found")
@@ -31,6 +32,10 @@ const ListingDetailsPage: React.FC = () => {
                     setListing(res.data)
                 })
                 .catch(err => {
+                    if (axios.isCancel(err)) {
+                        return
+                    }
+                    
                     setError(err.message || err)
                 })
                 .finally(() => {
@@ -39,6 +44,8 @@ const ListingDetailsPage: React.FC = () => {
         }
 
         fetchListing()
+
+        return () => abortController.abort()
     }, [listingId])
 
     if (isLoading) {
