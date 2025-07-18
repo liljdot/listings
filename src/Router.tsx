@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import HomePage from "./pages/HomePage";
 import App from "./App";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const Router: React.FC = () => {
     const router = createBrowserRouter([
@@ -17,7 +18,8 @@ const Router: React.FC = () => {
                     path: "/listing/:listingId",
                     element: <ListingDetailsPage />
                 }
-            ]
+            ],
+            errorElement: <NotFoundPage />
         }
     ])
 

@@ -2,7 +2,7 @@ const NotFoundPage: React.FC = () => {
 
     return (
         <>
-        
+            NotFound
         </>
     )
 }
