@@ -1,6 +1,6 @@
 import ListingList from "@/features/listing/components/ListingList";
 import type { ListingForList } from "@/features/listing/types";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
 import type { DateRange } from "react-day-picker";
 import { Spinner, Separator } from "@/components/ui";
@@ -10,6 +10,10 @@ const HomePage: React.FC = () => {
     const [filters, setFilters] = useState<{ search: string, guests: number, dates?: DateRange }>()
 
     const { data: listings, isLoading, error } = useFetch<ListingForList[]>("/api/listings", filters)
+
+    const handleFiltersChange = useCallback((newFilters: { search: string, guests: number, dates?: DateRange }) => {
+        setFilters(newFilters)
+    }, [])
 
     const renderListingList = () => {
         if (isLoading) {
@@ -37,7 +41,7 @@ const HomePage: React.FC = () => {
         <>
             <div className="container py-4">
                 <div className="mb-4">
-                    <ListingFilters onChange={filters => setFilters(filters)} />
+                    <ListingFilters onChange={handleFiltersChange} />
                     <Separator className="my-4" />
                 </div>
                 {

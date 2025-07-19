@@ -1,6 +1,6 @@
 import { Button, DateRangePicker, Input, Stepper } from "@/components/ui";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import type { DateRange } from "react-day-picker";
 
 interface Props {
@@ -19,6 +19,8 @@ const ListingFilters: React.FC<Props> = ({ onChange }) => {
     const handleSubmit = () => {
         onChange({dates, guests, search})
     }
+
+    console.log("new render")
 
     return (
         <>
@@ -48,4 +50,4 @@ const ListingFilters: React.FC<Props> = ({ onChange }) => {
     )
 }
 
-export default ListingFilters;
+export default memo(ListingFilters);
