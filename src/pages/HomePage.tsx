@@ -11,6 +11,28 @@ const HomePage: React.FC = () => {
 
     const { data: listings, isLoading, error } = useFetch<ListingForList[]>("/api/listings", filters)
 
+    const renderListingList = () => {
+        if (isLoading) {
+            return (
+                <div className="flex justify-center">
+                    <Spinner size={"sm"} />
+                </div>
+            );
+        }
+
+        if (error) {
+            return (
+                <div className="text-center">
+                    {error}
+                </div>
+            );
+        }
+
+        return (
+            <ListingList listings={listings || []} />
+        )
+    }
+
     return (
         <>
             <div className="container py-4">
@@ -19,23 +41,7 @@ const HomePage: React.FC = () => {
                     <Separator className="my-4" />
                 </div>
                 {
-                    isLoading && (
-                        <div className="flex justify-center">
-                            <Spinner size={"sm"} />
-                        </div>
-                    )
-                }
-                {
-                    error && (
-                        <div className="text-center">
-                            {error}
-                        </div>
-                    )
-                }
-                {
-                    !error &&
-                    !isLoading &&
-                    <ListingList listings={listings || []} />
+                    renderListingList()
                 }
             </div>
         </>
