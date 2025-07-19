@@ -27,9 +27,9 @@ const useFetch = <T>(path: string, params?: unknown, deps?: unknown[]) => {
             })
                 .then(res => {
                     setData(res.data)
-                    if (Math.random() > 0.8) {
-                        throw new Error("Something went wrong")
-                    }
+                    // if (Math.random() > 0.8) {
+                    //     throw new Error("Simulated fetch error")
+                    // }
                 })
                 .catch((err) => {
                     if (axios.isCancel(err)) {
