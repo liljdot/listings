@@ -20,8 +20,6 @@ const ListingFilters: React.FC<Props> = ({ onChange }) => {
         onChange({dates, guests, search})
     }
 
-    console.log("new render")
-
     return (
         <>
             <div className="flex flex-row items-center justify-center gap-2">
