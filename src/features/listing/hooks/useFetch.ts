@@ -18,29 +18,28 @@ const useFetch = <T>(path: string, params?: unknown, deps?: unknown[]) => {
         }
 
         return `${path}?${JSON.stringify(params)}`
-    }, [path, params])
+    }, [path, params]) // memoize storage key based on path and params to avoid unnecessary recomputations because functions are not stable in JavaScript
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+    const [data, setData] = useState<T>() // set states for data, isLoading, and error for fetch
 
-    const [data, setData] = useState<T>()
-
-    const abortController = useRef<AbortController>(null)
+    const abortController = useRef<AbortController>(null) // useRef to store the AbortController instance to cancel the fetch request if the component unmounts or if the dependencies change
 
     useEffect(() => {
         const now = new Date().getTime()
-        const cachedData = typedGetItem<T>(storageKey)
+        const cachedData = typedGetItem<T>(storageKey) // retrieve cached data from localStorage
 
         if (cachedData &&
-            now - cachedData.lastFetched < STALE_TIME
+            now - cachedData.lastFetched < STALE_TIME // check if the cached data is still fresh based on the STALE_TIME
         ) {
             setData(cachedData.data)
             setIsLoading(false)
             return
-        }
+        } // if cached data exists and is fresh, set the data and loading state and return early
 
-        abortController.current = new AbortController()
-
+        abortController.current = new AbortController() // create a new AbortController instance to manage the fetch request
+        // proceed to fetch data from the API
         const fetchData = () => {
             setIsLoading(true)
             setError(null)
@@ -82,7 +81,7 @@ const useFetch = <T>(path: string, params?: unknown, deps?: unknown[]) => {
             lastFetched: new Date().getTime(),
             data
         })
-    }, [data, storageKey])
+    }, [data, storageKey]) // update cached data in localStorage whenever the data changes
 
     return {
         isLoading,
