@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 // @ts-expect-error import from js file
 import api from "@/api"
 // @ts-expect-error import from js file
@@ -12,16 +12,13 @@ const typedSetItem = setItem as <T>(key: string, value: { lastFetched: number, d
 
 const useFetch = <T>(path: string, params?: unknown, deps?: unknown[]) => {
     const STALE_TIME = 1000 * 60 * 5 // 5 minutes
-
-    const getStorageKey = () => {
+    const storageKey = useMemo(() => {
         if (!params) {
             return path
         }
 
         return `${path}?${JSON.stringify(params)}`
-    }
-
-    const storageKey = getStorageKey()
+    }, [path, params])
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
