@@ -44,7 +44,7 @@ const useFetch = <T>(path: string, params?: unknown, deps?: unknown[]) => {
             setIsLoading(true)
             setError(null)
 
-            return typedApi.get<T>(path, {
+            return typedApi.get<T>(path, { // the T here is passed down from the generic type of the hook
                 params: params,
                 signal: abortController.current?.signal
             })
