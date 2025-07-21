@@ -10,7 +10,7 @@ const typedApi = api as AxiosInstance
 const typedGetItem = getItem as <T>(key: string) => { lastFetched: number, data: T } | undefined
 const typedSetItem = setItem as <T>(key: string, value: { lastFetched: number, data: T }) => void
 
-const useFetch = <T>(path: string, params?: unknown, deps?: unknown[]) => {
+const useFetch = <T>(path: string, params: object, deps?: unknown[]) => {
     const STALE_TIME = 1000 * 60 * 5 // 5 minutes
     const storageKey = useMemo(() => {
         if (!params) {

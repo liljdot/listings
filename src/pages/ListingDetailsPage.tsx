@@ -7,7 +7,7 @@ import DataRenderer from "@/features/shared/DataRenderer";
 const ListingDetailsPage: React.FC = () => {
     const { listingId } = useParams()
 
-    const { data: listing, isLoading, error } = useFetch<ListingForList>(`/api/listings/${listingId}`, undefined, [listingId])
+    const { data: listing, isLoading, error } = useFetch<ListingForList>(`/api/listings/${listingId}`, {}, [listingId])
 
     return (
         <>
