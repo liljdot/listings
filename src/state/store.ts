@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
+import { listingsSliceReducer } from './slices/listingsSlices';
 
 const store = configureStore({
     reducer: {
-
+        listings: listingsSliceReducer
     }
 })
 

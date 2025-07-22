@@ -1,20 +1,27 @@
 import ListingList from "@/features/listing/components/ListingList";
-import type { ListingForList } from "@/features/listing/types";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
 import type { DateRange } from "react-day-picker";
 import { Separator } from "@/components/ui";
-import useFetch from "@/features/listing/hooks/useFetch";
 import DataRenderer from "@/features/shared/DataRenderer";
+import { useSelector } from "react-redux";
+import { useAppDispatch, type RootState } from "@/state/store";
+import { fetchListings } from "@/state/slices/listingsSlices";
 
 const HomePage: React.FC = () => {
     const [filters, setFilters] = useState<{ search: string, guests: number, dates?: DateRange }>()
 
-    const { data: listings, isLoading, error } = useFetch<ListingForList[]>("/api/listings", filters)
+    const dispatch = useAppDispatch()
+
+    const { listings, isLoading, error } = useSelector((state: RootState) => state.listings)
 
     const handleFiltersChange = useCallback((newFilters: { search: string, guests: number, dates?: DateRange }) => {
         setFilters(newFilters)
     }, [])
+
+    useEffect(() => {
+        dispatch(fetchListings(filters))
+    }, [filters, dispatch])
 
     return (
         <>
