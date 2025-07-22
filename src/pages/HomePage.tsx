@@ -20,7 +20,9 @@ const HomePage: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        dispatch(fetchListings(filters))
+        const request = dispatch(fetchListings(filters))
+
+        return request.abort
     }, [filters, dispatch])
 
     return (

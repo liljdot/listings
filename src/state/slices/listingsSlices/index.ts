@@ -4,6 +4,7 @@ import type { DateRange } from "react-day-picker";
 // @ts-expect-error import from js file
 import api from "@/api"
 import type { AxiosInstance } from "axios";
+import axios from "axios";
 
 const typedApi = api as AxiosInstance
 
@@ -32,11 +33,17 @@ const listingsSlice = createSlice({
             isLoading: false,
             listings: action.payload
         }));
-        builder.addCase(fetchListings.rejected, (state, action) => ({
-            ...state,
-            isLoading: false,
-            error: action.error.message || "failed to fetch listings"
-        }))
+        builder.addCase(fetchListings.rejected, (state, action) => {
+            if (axios.isCancel(action.error)) {
+                return
+            }
+
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error.message || "Something went wrong while fetching listings"
+            }
+        })
     }
 })
 
@@ -45,9 +52,6 @@ export const fetchListings = createAsyncThunk("listings/fetchListings", (filters
         params: filters
     })
         .then(res => res.data)
-        .catch(err => {
-            throw new Error(err.message || err)
-        })
 })
 
 export const listingsSliceActions = listingsSlice.actions
