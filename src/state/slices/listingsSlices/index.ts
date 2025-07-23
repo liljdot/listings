@@ -1,4 +1,4 @@
-import type { ListingForList } from "@/features/listing/types";
+import type { Listing, ListingForList } from "@/features/listing/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { DateRange } from "react-day-picker";
 // @ts-expect-error import from js file
@@ -11,17 +11,43 @@ const typedApi = api as AxiosInstance
 const initialState: {
     listings: ListingForList[],
     isLoading: boolean,
-    error: string | null
+    error: string | null,
+    favoritesListingIds: Listing["id"][]
 } = {
     listings: [],
     isLoading: false,
-    error: null
+    error: null,
+    favoritesListingIds: []
 }
 
 const listingsSlice = createSlice({
     name: "listings",
     initialState,
-    reducers: {},
+    reducers: {
+        addFavoriteListing: (state, action) => {
+            const listingId = action.payload
+
+            if (state.favoritesListingIds.includes(listingId)) {
+                return
+            }
+
+            return {
+                ...state,
+                favoritesListingIds: [
+                    ...state.favoritesListingIds,
+                    listingId
+                ]
+            }
+        },
+        removeFavoriteListing: (state, action) => {
+            const listingId = action.payload
+
+            return {
+                ...state,
+                favoritesListingIds: state.favoritesListingIds.filter(id => id != listingId)
+            }
+        }
+    },
     extraReducers: builder => {
         builder.addCase(fetchListings.pending, state => ({
             ...state,
@@ -54,5 +80,5 @@ export const fetchListings = createAsyncThunk("listings/fetchListings", (filters
         .then(res => res.data)
 })
 
-export const listingsSliceActions = listingsSlice.actions
+export const { addFavoriteListing, removeFavoriteListing } = listingsSlice.actions
 export const listingsSliceReducer = listingsSlice.reducer
