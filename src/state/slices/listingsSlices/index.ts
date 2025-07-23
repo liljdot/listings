@@ -1,5 +1,5 @@
 import type { Listing, ListingForList } from "@/features/listing/types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { DateRange } from "react-day-picker";
 // @ts-expect-error import from js file
 import api from "@/api"
@@ -24,7 +24,7 @@ const listingsSlice = createSlice({
     name: "listings",
     initialState,
     reducers: {
-        addFavoriteListing: (state, action) => {
+        addFavoriteListing: (state, action: PayloadAction<Listing["id"]>) => {
             const listingId = action.payload
 
             if (state.favoritesListingIds.includes(listingId)) {

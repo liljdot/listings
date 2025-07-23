@@ -3,6 +3,7 @@ import type { ListingForList } from "../types";
 import { DollarSign, Pin, Users } from "lucide-react";
 import ListingCardImages from "./ListingCardImages";
 import { Link } from "react-router-dom";
+import ListingFavoriteButton from "./ListingFavoriteButton";
 
 interface Props {
     listing: ListingForList
@@ -40,6 +41,7 @@ const ListingCard: React.FC<Props> = ({ listing }) => {
                             </span>
                         </span>
                     </div>
+                    <ListingFavoriteButton listingId={listing.id} />
                 </CardContent>
             </Link >
         </Card >
