@@ -12,8 +12,8 @@ const NavBar: React.FC = () => {
                 <Link to={"/favorites"}>
                     Favorites
                 </Link>
-                <Separator />
             </div>
+            <Separator />
         </>
     )
 }
