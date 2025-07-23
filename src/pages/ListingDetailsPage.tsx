@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import ListingDetailsCard from "@/features/listing/components/ListingDetailsCard";
 import useFetch from "@/features/listing/hooks/useFetch";
 import type { ListingForList } from "@/features/listing/types";
-import DataRenderer from "@/features/shared/DataRenderer";
+import DataRenderer from "@/features/shared/components/DataRenderer";
 
 const ListingDetailsPage: React.FC = () => {
     const { listingId } = useParams()

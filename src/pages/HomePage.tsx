@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import ListingFilters from "@/features/listing/components/ListingFilters";
 import type { DateRange } from "react-day-picker";
 import { Separator } from "@/components/ui";
-import DataRenderer from "@/features/shared/DataRenderer";
+import DataRenderer from "@/features/shared/components/DataRenderer";
 import { useSelector } from "react-redux";
 import { useAppDispatch, type RootState } from "@/state/store";
 import { fetchListings } from "@/state/slices/listingsSlices";
