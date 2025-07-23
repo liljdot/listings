@@ -1,27 +1,48 @@
-import { useAppDispatch } from "@/state/store";
+import { useAppDispatch, type RootState } from "@/state/store";
 import type { Listing } from "../types";
-import { addFavoriteListing } from "@/state/slices/listingsSlices";
+import { addFavoriteListing, removeFavoriteListing } from "@/state/slices/listingsSlices";
 import { Button } from "@/components/ui";
 import { Heart } from "lucide-react";
-import type { MouseEventHandler } from "react";
+import { useMemo, type MouseEventHandler } from "react";
+import { useSelector } from "react-redux";
+import { cn } from "@/lib/utils";
 
 interface Props {
     listingId: Listing["id"]
-    isFavorited?: boolean
+    className?: string
 }
 
-const ListingFavoriteButton: React.FC<Props> = ({ listingId }) => {
+const ListingFavoriteButton: React.FC<Props> = ({ listingId, className }) => {
+    const { favoritesListingIds } = useSelector((state: RootState) => state.listings)
     const dispatch = useAppDispatch()
+
+    const isFavorited = useMemo(() => {
+        return favoritesListingIds.includes(listingId)
+    }, [listingId, favoritesListingIds])
 
     const handleClick: MouseEventHandler = e => {
         e.preventDefault()
+
+        if (isFavorited) {
+            return dispatch(removeFavoriteListing(listingId))
+        }
+
         dispatch(addFavoriteListing(listingId))
     }
 
     return (
         <>
-            <Button onClick={handleClick}>
-                <Heart />
+            <Button
+                className={className}
+                onClick={handleClick}
+                variant={"outline"}
+            >
+                <Heart
+                    className={cn(
+                        "h-4 w-4",
+                        { 'fill-primary text-primary': isFavorited }
+                    )}
+                />
             </Button>
         </>
     )
