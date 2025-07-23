@@ -13,7 +13,13 @@ const ListingCard: React.FC<Props> = ({ listing }) => {
 
     return (
         <Card className="w-[320px]">
-            <ListingCardImages listing={listing} />
+            <div className="relative">
+                <ListingCardImages listing={listing} />
+                <ListingFavoriteButton
+                    className="absolute right-4 top-4"
+                    listingId={listing.id}
+                />
+            </div>
             <Link to={`/listing/${listing.id}`}>
                 <CardContent className="flex flex-col gap-2 p-4">
                     <h2 className="mb-2 text-xl font-semibold">
@@ -41,7 +47,6 @@ const ListingCard: React.FC<Props> = ({ listing }) => {
                             </span>
                         </span>
                     </div>
-                    <ListingFavoriteButton listingId={listing.id} />
                 </CardContent>
             </Link >
         </Card >
