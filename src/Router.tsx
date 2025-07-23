@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import App from "./App";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ListingFavoritesPage from "./pages/ListingFavoritesPage";
 
 const Router: React.FC = () => {
     const router = createBrowserRouter([
@@ -13,6 +14,10 @@ const Router: React.FC = () => {
                 {
                     path: "/",
                     element: <HomePage />
+                },
+                {
+                    path: "/favorites",
+                    element: <ListingFavoritesPage />
                 },
                 {
                     path: "/listing/:listingId",
