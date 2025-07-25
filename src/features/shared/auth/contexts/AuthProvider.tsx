@@ -1,8 +1,13 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+// @ts-expect-error import from js file
+import api from "@/api";
+import type { AxiosInstance } from "axios";
+
+const typedApi = api as AxiosInstance
 
 interface AuthContext {
-    token: string | null,
-    setToken: React.Dispatch<React.SetStateAction<string | null>>
+    token?: string | null,
+    setToken: React.Dispatch<React.SetStateAction<string | null | undefined>>
 }
 
 interface Props {
@@ -22,7 +27,25 @@ export const useAuthContext: () => AuthContext = () => {
 }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(null)
+    const [token, setToken] = useState<string | null>()
+
+    useEffect(() => {
+        const fetchMe = () => {
+            typedApi.get<{
+                accessToken: string | null
+                user: object
+            }>("/api/me")
+                .then(res => {
+                    setToken(res.data.accessToken)
+                })
+                .catch(err => {
+                    console.error("Failed to fetch user data:", err)
+                    setToken(null) // Clear token on error
+                })
+        }
+
+        fetchMe()
+    }, [])
 
     return (
         <authContext.Provider value={{ token, setToken }}>
