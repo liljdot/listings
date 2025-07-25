@@ -5,11 +5,14 @@ import Router from './Router.tsx'
 import { seedLocalDatabase } from '@/api/data/seed';
 import { Provider } from 'react-redux';
 import store from './state/store.ts';
+import AuthProvider from './features/shared/auth/contexts/AuthProvider.tsx';
 
 seedLocalDatabase()
 
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <Router />
+    <AuthProvider>
+      <Router />
+    </AuthProvider>
   </Provider >,
 )

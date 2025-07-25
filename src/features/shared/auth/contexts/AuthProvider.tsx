@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 interface AuthContext {
-    user: object | null
+    token: string | null,
+    setToken: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 interface Props {
@@ -21,10 +22,10 @@ export const useAuthContext: () => AuthContext = () => {
 }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-    const [auth] = useState<AuthContext>()
+    const [token, setToken] = useState<string | null>(null)
 
     return (
-        <authContext.Provider value={auth}>
+        <authContext.Provider value={{ token, setToken }}>
             {children}
         </authContext.Provider>
     )
