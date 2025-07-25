@@ -4,6 +4,7 @@ import App from "./App";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ListingFavoritesPage from "./pages/ListingFavoritesPage";
+import SignInPage from "./pages/SignInPage";
 
 const Router: React.FC = () => {
     const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const Router: React.FC = () => {
                 {
                     path: "/listing/:listingId",
                     element: <ListingDetailsPage />
+                },
+                {
+                    path: "/signin",
+                    element: <SignInPage />
                 }
             ],
             errorElement: <NotFoundPage />
