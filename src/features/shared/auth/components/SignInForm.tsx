@@ -1,7 +1,13 @@
 import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button, Card, CardContent, CardHeader, Input, Separator } from "@/components/ui"
+import { Button, Card, CardContent, CardHeader, Input, Separator, Spinner } from "@/components/ui"
+// @ts-expect-error import from js file
+import api from "@/api"
+import type { AxiosError, AxiosInstance } from "axios"
+import { useAuthContext } from "../contexts/AuthProvider"
+
+const typedApi = api as AxiosInstance
 
 const signInFormSchema = z.object({
     email: z.email(),
@@ -9,11 +15,25 @@ const signInFormSchema = z.object({
 })
 
 const SignInForm: React.FC = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { setToken } = useAuthContext()
+
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm({
         resolver: zodResolver(signInFormSchema)
     })
 
-    const onSubmit = handleSubmit(data => console.log(data))
+    const onSubmit = handleSubmit(data => {
+        typedApi.post<{
+            accessToken: string
+        }>("/api/signin", data)
+            .then(res => {
+                setToken(res.data.accessToken)
+            })
+            .catch((err: AxiosError<{ message: string }>) => {
+                setError("root", {
+                    message: err.response?.data.message
+                })
+            })
+    })
 
     return (
         <>
@@ -58,9 +78,21 @@ const SignInForm: React.FC = () => {
                                 )
                             }
                         </div>
-                        <Button type="submit">
-                            Sign In
+                        <Button
+                            type="submit"
+                            disabled={isSubmitting}
+                        >
+                            {
+                                isSubmitting
+                                    ? <Spinner size={"sm"}/>
+                                    : "Sign In"
+                            }
                         </Button>
+                        {errors.root && (
+                            <div className='text-center text-sm text-red-500'>
+                                {errors.root.message}
+                            </div>
+                        )}
                     </form>
                 </CardContent>
             </Card>
