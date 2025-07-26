@@ -22,7 +22,7 @@ const SignInForm: React.FC = () => {
     })
 
     const onSubmit = handleSubmit(data => {
-        typedApi.post<{
+        return typedApi.post<{
             accessToken: string
         }>("/api/signin", data)
             .then(res => {
