@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useState, type ReactNode } from "react";
 // @ts-expect-error import from js file
 import api from "@/api";
-import type { AxiosInstance } from "axios";
+import type { AxiosError, AxiosInstance } from "axios";
 
 const typedApi = api as AxiosInstance
 
@@ -40,6 +40,32 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
         return () => typedApi.interceptors.request.eject(authInterceptor)
     }, [token]) // runs every time the token changes to add the Authorization header to the api object and hence every request made using the api object
+
+    useLayoutEffect(() => {
+        const refreshInterceptor = typedApi.interceptors.response.use(
+            res => res,
+            (error: AxiosError<{ message: string }>) => {
+                const originalRequest = error.config
+
+                if (error.response?.status === 403 && error.response.data.message === "Unauthorized") {
+                    console.log("token expired, refreshing...")
+                    return typedApi.get<{ accessToken: string }>("/api/refreshToken")
+                        .then(res => {
+                            setToken(res.data.accessToken)
+
+                            return typedApi(originalRequest!)
+                        })
+                        .catch(() => {
+                            setToken(null)
+                        })
+                }
+
+                return Promise.reject(error)
+            }
+        )
+
+        return () => typedApi.interceptors.response.eject(refreshInterceptor)
+    }, [])
 
     useEffect(() => {
         const fetchMe = () => {
