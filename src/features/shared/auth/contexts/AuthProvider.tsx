@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useState, type ReactNode } from "react";
 // @ts-expect-error import from js file
 import api from "@/api";
 import type { AxiosInstance } from "axios";
@@ -28,6 +28,18 @@ export const useAuthContext: () => AuthContext = () => {
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
     const [token, setToken] = useState<string | null>()
+
+    useLayoutEffect(() => {
+        const authInterceptor = typedApi.interceptors.request.use(config => {
+            config.headers.Authorization = token
+                ? `Bearer ${token}`
+                : config.headers.Authorization
+
+            return config
+        })
+
+        return () => typedApi.interceptors.request.eject(authInterceptor)
+    }, [token]) // runs every time the token changes to add the Authorization header to the api object and hence every request made using the api object
 
     useEffect(() => {
         const fetchMe = () => {
