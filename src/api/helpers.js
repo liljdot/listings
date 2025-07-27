@@ -27,27 +27,38 @@ export const cleanUser = (user) => {
 // Wrapper for axios mock adapter that adds authentication checks
 export const withAuth =
   (...data) =>
-  async (config) => {
-    const token = config.headers.Authorization?.split(' ')[1];
+    async (config) => {
+      const token = config.headers.Authorization?.split(' ')[1];
 
-    // Verifies access token if present
-    const verified = token ? await verifyToken(token) : false;
+      // Verifies access token if present
+      const verified = token ? await verifyToken(token) : false;
 
-    // Returns 403 if token is invalid and auth is enabled
-    if (env.USE_AUTH && !verified) {
-      return [401, { message: 'Unauthorized' }];
-    }
+      // Returns 403 if token is invalid and auth is enabled
+      if (env.USE_AUTH) {
+        if (verified === "expired") {
+          return [403, { message: 'Token expired' }];
+        }
 
-    // Calls the original mock function
-    return typeof data[0] === 'function' ? data[0](config) : data;
-  };
+        if (!verified) {
+          return [401, { message: 'Unauthorized' }];
+        }
+      }
+
+      // Calls the original mock function
+      return typeof data[0] === 'function' ? data[0](config) : data;
+    };
 
 // Verifies a JWT token
 export const verifyToken = async (token, options = undefined) => {
   try {
     const verification = await jose.jwtVerify(token, jwtSecret);
+
     return options?.returnPayload ? verification.payload : true;
-  } catch {
+  } catch (err) {
+    if (err.code === 'ERR_JWT_EXPIRED') {
+      return 'expired';
+    }
+
     return false;
   }
 };
@@ -64,6 +75,6 @@ export const generateRefreshToken = async (data) => {
 export const generateAccessToken = async (data) => {
   return await new jose.SignJWT({ data })
     .setProtectedHeader({ alg: 'HS256' })
-    .setExpirationTime('15m')
+    .setExpirationTime('1m')
     .sign(jwtSecret);
 };
