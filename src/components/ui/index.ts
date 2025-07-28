@@ -2,8 +2,9 @@ export * from './Avatar';
 export * from "./Button"
 export * from "./Calendar"
 export * from './Card';
-export * from "./carousel"
+export * from "./Carousel"
 export * from "./DatePicker";
+export * from "./DropdownMenu"
 export * from './Input';
 export * from "./Popover"
 export * from "./Separator"
