@@ -35,13 +35,14 @@ export const withAuth =
 
       // Returns 403 if token is invalid and auth is enabled
       if (env.USE_AUTH) {
-        if (verified === "expired") {
+        if (verified === "expired" || !verified) {
           return [403, { message: 'Unauthorized' }];
         }
 
-        if (!verified) {
-          return [401, { message: 'Unauthorized' }];
-        }
+        // if (!verified) {
+        //   return [401, { message: 'Unauthorized' }];
+        // }
+        // serparating them will cause access token to not be fetched with the refresh token thus killing session on every refresh. the refresh token is stored in a cookie
       }
 
       // Calls the original mock function
