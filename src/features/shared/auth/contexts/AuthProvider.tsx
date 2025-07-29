@@ -48,7 +48,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
                 const originalRequest = error.config
 
                 if (error.response?.status === 403 && error.response.data.message === "Unauthorized") {
-                    console.log("token expired, refreshing...")
                     return typedApi.get<{ accessToken: string }>("/api/refreshToken")
                         .then(res => {
                             setToken(res.data.accessToken)
@@ -57,6 +56,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
                         })
                         .catch(() => {
                             setToken(null)
+                            return Promise.reject(error)
                         })
                 }
 
