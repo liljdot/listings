@@ -1,14 +1,17 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Separator } from "@/components/ui";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, Separator } from "@/components/ui";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../auth/contexts/AuthProvider";
 // @ts-expect-error import from js file
 import api from "@/api";
 import type { AxiosInstance } from "axios";
+import { Laptop, LogOutIcon, Moon, Sun } from "lucide-react";
+import { useThemeContext } from "../theme/contexts/ThemeProvider";
 
 const typedApi = api as AxiosInstance
 
 const NavBar: React.FC = () => {
     const { setToken } = useAuthContext()
+    const { setTheme } = useThemeContext()
 
     const handleSignOut = () => {
         typedApi.post("/api/signout")
@@ -35,8 +38,29 @@ const NavBar: React.FC = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuItem onClick={handleSignOut}>
-                                Sign Out
+                                <LogOutIcon className="mr-2 h-4 w-4" />
+                                <span>Sign Out</span>
                             </DropdownMenuItem>
+                            <DropdownMenuSub>
+                                <DropdownMenuSubTrigger>
+                                    <Sun className="mr-2 h-4 w-4" />
+                                    <span>Theme</span>
+                                </DropdownMenuSubTrigger>
+                                <DropdownMenuSubContent>
+                                    <DropdownMenuItem onClick={() => setTheme("light")}>
+                                        <Sun className="mr-2 h-4 w-4" />
+                                        <span>Light</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => setTheme("dark")}>
+                                        <Moon className="mr-2 h-4 w-4" />
+                                        <span>Dark</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => setTheme("system")}>
+                                        <Laptop className="mr-2 h-4 w-4" />
+                                        <span>System</span>
+                                    </DropdownMenuItem>
+                                </DropdownMenuSubContent>
+                            </DropdownMenuSub>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
