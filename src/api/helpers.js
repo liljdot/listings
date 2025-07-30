@@ -3,7 +3,7 @@ import * as jose from 'jose';
 import { env } from '../lib/env.js';
 import { getItem, setItem } from '../lib/utils/localStorage.js';
 
-const JWT_SECRET_KEY = 'cosdensolutions';
+const JWT_SECRET_KEY = 'jehu';
 const jwtSecret = new TextEncoder().encode(JWT_SECRET_KEY);
 
 // Waits for a given number of milliseconds
