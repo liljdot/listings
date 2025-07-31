@@ -6,7 +6,7 @@ export * from "./Carousel"
 export * from "./DatePicker";
 export * from "./DropdownMenu"
 export * from './Input';
-export * from "./Popover"
+export * from "./Popover" 
 export * from "./Separator"
 export * from "./Spinner"
 export * from "./Stepper"
