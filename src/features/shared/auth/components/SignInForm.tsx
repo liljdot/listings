@@ -17,7 +17,12 @@ const signInFormSchema = z.object({
 const SignInForm: React.FC = () => {
     const { setToken } = useAuthContext()
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        setError
+    } = useForm({
         resolver: zodResolver(signInFormSchema)
     })
 
@@ -84,7 +89,7 @@ const SignInForm: React.FC = () => {
                         >
                             {
                                 isSubmitting
-                                    ? <Spinner size={"sm"}/>
+                                    ? <Spinner size={"sm"} />
                                     : "Sign In"
                             }
                         </Button>
