@@ -1,19 +1,19 @@
 import type { ComponentProps } from "react";
 import { Input } from "./Input";
-import { useController, type Control } from "react-hook-form";
+import { useController, type Control, type FieldName,  type FieldPath,  type FieldValues } from "react-hook-form";
 
-interface Props extends ComponentProps<"input"> {
-    control: Control
-    name: string
-    type: string
+interface Props<T extends FieldValues> extends ComponentProps<"input"> {
+    control: Control<T>
+    name: FieldPath<T>
+    type?: string
 }
 
-const TextInput: React.FC<Props> = ({
+const TextInput = <T extends FieldValues>({
     control,
     type = "text",
     name,
     ...props
-}) => {
+}: Props<T>) => {
     const form = useController({ control, name })
     const error = form.formState.errors[name]
 
