@@ -7,6 +7,7 @@ import api from "@/api"
 import type { AxiosError, AxiosInstance } from "axios"
 import { useAuthContext } from "../contexts/AuthProvider"
 import TextInput from "@/components/ui/TextInput"
+import Form from "@/components/ui/Form"
 
 const typedApi = api as AxiosInstance
 
@@ -18,16 +19,11 @@ const signInFormSchema = z.object({
 const SignInForm: React.FC = () => {
     const { setToken } = useAuthContext()
 
-    const {
-        handleSubmit,
-        formState: { errors, isSubmitting },
-        control,
-        setError
-    } = useForm({
+    const form = useForm({
         resolver: zodResolver(signInFormSchema)
     })
 
-    const onSubmit = handleSubmit(data => {
+    const onSubmit = form.handleSubmit(data => {
         return typedApi.post<{
             accessToken: string
         }>("/api/signin", data)
@@ -35,7 +31,7 @@ const SignInForm: React.FC = () => {
                 setToken(res.data.accessToken)
             })
             .catch((err: AxiosError<{ message: string }>) => {
-                setError("root", {
+                form.setError("root", {
                     message: err.response?.data.message
                 })
             })
@@ -54,37 +50,33 @@ const SignInForm: React.FC = () => {
                     <Separator />
                 </CardHeader>
                 <CardContent>
-                    <form
+                    <Form
+                        form={form}
                         className="flex flex-col gap-4"
                         onSubmit={onSubmit}
                     >
-                        <TextInput<z.output<typeof signInFormSchema>>
+                        <TextInput
                             name="email"
-                            control={control}
+                            control={form.control}
                             placeholder="name@example.com"
                         />
-                        <TextInput<z.output<typeof signInFormSchema>>
+                        <TextInput
                             name="password"
                             type="password"
-                            control={control}
+                            control={form.control}
                             placeholder="********"
                         />
                         <Button
                             type="submit"
-                            disabled={isSubmitting}
+                            disabled={form.formState.isSubmitting}
                         >
                             {
-                                isSubmitting
+                                form.formState.isSubmitting
                                     ? <Spinner size={"sm"} />
                                     : "Sign In"
                             }
                         </Button>
-                        {errors.root && (
-                            <div className='text-center text-sm text-red-500'>
-                                {errors.root.message}
-                            </div>
-                        )}
-                    </form>
+                    </Form>
                 </CardContent>
             </Card>
         </>
