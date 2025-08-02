@@ -52,7 +52,6 @@ const SignInForm: React.FC = () => {
                 <CardContent>
                     <Form
                         form={form}
-                        className="flex flex-col gap-4"
                         onSubmit={onSubmit}
                     >
                         <TextInput
