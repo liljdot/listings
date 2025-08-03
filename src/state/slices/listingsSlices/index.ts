@@ -7,6 +7,7 @@ import api from "@/api"
 import { getItem, setItem } from "@/lib/utils/localStorage"
 import type { AxiosInstance } from "axios";
 import axios from "axios";
+import { listingsApi } from "@/services/api/listingsApi";
 
 const typedApi = api as AxiosInstance
 const typedGetItem = getItem as <T>(key: string) => { lastFetched: number, data: T } | undefined
@@ -73,6 +74,12 @@ const listingsSlice = createSlice({
                 isLoading: false,
                 error: action.error.message || "Something went wrong while fetching listings"
             }
+        })
+        builder.addMatcher(listingsApi.endpoints.getSingleListing.matchFulfilled, (state, response) => {
+            console.log("i have fetched a single listing:", response)
+        })
+        builder.addMatcher(listingsApi.endpoints.getSingleListing.matchRejected, (state, response) => {
+            console.log("i have failed a single listing:", response)
         })
     }
 })
