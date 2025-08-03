@@ -5,6 +5,7 @@ import type { DateRange } from "react-day-picker";
 import { Separator } from "@/components/ui";
 import DataRenderer from "@/features/shared/components/DataRenderer";
 import { useGetListingsQuery } from "@/services/api/listingsApi";
+import type { AxiosError } from "axios";
 
 const HomePage: React.FC = () => {
     const [filters, setFilters] = useState<{ search: string, guests: number, dates?: DateRange }>()
@@ -15,7 +16,6 @@ const HomePage: React.FC = () => {
         setFilters(newFilters)
     }, [])
 
-
     return (
         <>
             <div className="container py-4">
@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <DataRenderer
                     isLoading={isLoading || isFetching}
-                    error={error as string}
+                    error={error ? (error as AxiosError).message : null}
                 >
                     <ListingList listings={listings || []} />
                 </DataRenderer>

@@ -2,7 +2,7 @@ import type { ListingForList } from "@/features/listing/types"
 import { createApi, type BaseQueryFn } from "@reduxjs/toolkit/query/react"
 // @ts-expect-error import from js file
 import api from "@/api"
-import type { AxiosError, AxiosInstance } from "axios"
+import type { AxiosInstance } from "axios"
 import type { DateRange } from "react-day-picker"
 
 const typedApi = api as AxiosInstance
@@ -21,25 +21,9 @@ const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs, unknown, unknown> = ({ i
         return typedApi.get<ListingForList[]>(`/api/listings`, {
             params: filters
         })
-            .then(res => ({ data: res.data }))
-            .catch((err: AxiosError<{ message: string }>) => {
-                console.log(err)
-                return {
-                    status: err.status,
-                    error: err.message
-                }
-            })
     }
 
     return typedApi.get<ListingForList>(`/api/listings/${id}`)
-        .then(res => ({ data: res.data }))
-        .catch((err: AxiosError<{ message: string }>) => {
-            console.log(err)
-            return {
-                status: err.status,
-                error: err.message
-            }
-        })
 }
 
 export const listingsApi = createApi({
