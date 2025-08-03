@@ -96,12 +96,6 @@ const listingsSlice = createSlice({
                 error: action.error.message || "Something went wrong while fetching listings"
             }
         })
-        builder.addMatcher(listingsApi.endpoints.getSingleListing.matchFulfilled, (...[, response]) => {
-            console.log("i have fetched a single listing:", response)
-        })
-        builder.addMatcher(listingsApi.endpoints.getSingleListing.matchRejected, (...[, response]) => {
-            console.log("i have failed a single listing:", response)
-        })
     }
 })
 
