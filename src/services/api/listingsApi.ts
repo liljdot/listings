@@ -24,6 +24,9 @@ const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs, unknown, unknown> = ({ i
     }
 
     return typedApi.get<ListingForList>(`/api/listings/${id}`)
+
+    // these work because the axios response coincidentally matches the shape custom base query is expectected to return {data:... error:... status:...}
+    // ideally we would have to use .then and .catch to return the expected shape like .then(res => ({data: res.data})).catch(err => ({error: err.message, status: err.status}))
 }
 
 export const listingsApi = createApi({
