@@ -10,20 +10,36 @@ interface CustomBaseQueryArgs {
 
 const typedApi = api as AxiosInstance
 
-const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs, unknown, unknown> = (data) => {
+const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs | undefined, unknown, unknown> = (data) => {
+    if (!data) {
+        return typedApi.post<{
+            accessToken: string
+        }>("/api/signout", data)
+            .then(res => ({
+                data: res.data,
+                status: res.status
+            }))
+            .catch((err: AxiosError<{ message: string }>) => {
+                return {
+                    error: err.response?.data.message,
+                    status: err.status
+                }
+            })
+    }
+
     return typedApi.post<{
         accessToken: string
     }>("/api/signin", data)
-    .then(res => ({
-        data: res.data,
-        status: res.status
-    }))
-    .catch((err: AxiosError<{message: string}>) => {
-        return {
-            error: err.response?.data.message,
-            status: err.status
-        }
-    })
+        .then(res => ({
+            data: res.data,
+            status: res.status
+        }))
+        .catch((err: AxiosError<{ message: string }>) => {
+            return {
+                error: err.response?.data.message,
+                status: err.status
+            }
+        })
 }
 
 export const authApi = createApi({
@@ -32,8 +48,11 @@ export const authApi = createApi({
     endpoints: builder => ({
         signIn: builder.mutation<{ accessToken: string }, CustomBaseQueryArgs>({
             query: data => data
+        }),
+        signOut: builder.mutation<{acccessToken: string}, undefined>({
+            query: data => data
         })
     })
 })
 
-export const { useSignInMutation } = authApi
+export const { useSignInMutation, useSignOutMutation } = authApi
