@@ -49,8 +49,8 @@ export const authApi = createApi({
         signIn: builder.mutation<{ accessToken: string }, CustomBaseQueryArgs>({
             query: data => data
         }),
-        signOut: builder.mutation<{acccessToken: string}, undefined>({
-            query: data => data
+        signOut: builder.mutation<{ acccessToken: string }, undefined>({
+            query: () => undefined
         })
     })
 })
