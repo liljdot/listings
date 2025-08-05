@@ -1,20 +1,18 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, Separator } from "@/components/ui";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../auth/contexts/AuthProvider";
-// @ts-expect-error import from js file
-import api from "@/api";
-import type { AxiosInstance } from "axios";
 import { Laptop, LogOutIcon, Moon, Sun } from "lucide-react";
 import { useThemeContext } from "../theme/contexts/ThemeProvider";
+import { useSignOutMutation } from "@/services/api/authApi";
 
-const typedApi = api as AxiosInstance
 
 const NavBar: React.FC = () => {
     const { setToken } = useAuthContext()
     const { setTheme } = useThemeContext()
+    const [mutate] = useSignOutMutation()
 
     const handleSignOut = () => {
-        typedApi.post("/api/signout")
+        mutate(undefined).unwrap()
             .finally(() => {
                 setToken(null)
             })
