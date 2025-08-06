@@ -7,7 +7,7 @@ import { useSignOutMutation } from "@/services/api/authApi";
 
 
 const NavBar: React.FC = () => {
-    const { setToken } = useAuthContext()
+    const { setToken, setUser } = useAuthContext()
     const { setTheme } = useThemeContext()
     const [mutate] = useSignOutMutation()
 
@@ -15,6 +15,7 @@ const NavBar: React.FC = () => {
         mutate(undefined).unwrap()
             .finally(() => {
                 setToken(null)
+                setUser(null)
             })
     }
 
