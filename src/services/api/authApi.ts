@@ -2,6 +2,7 @@ import { createApi, type BaseQueryFn } from "@reduxjs/toolkit/query/react";
 // @ts-expect-error import from js file
 import api from "@/api"
 import type { AxiosError, AxiosInstance } from "axios";
+import type { User } from "@/features/user/types";
 
 interface CustomBaseQueryArgs {
     email: string;
@@ -46,7 +47,7 @@ export const authApi = createApi({
     reducerPath: "api/authApi",
     baseQuery: customBaseQuery,
     endpoints: builder => ({
-        signIn: builder.mutation<{ accessToken: string }, CustomBaseQueryArgs>({
+        signIn: builder.mutation<{ accessToken: string, user: User }, CustomBaseQueryArgs>({
             query: data => data
         }),
         signOut: builder.mutation<{ acccessToken: string }, undefined>({
