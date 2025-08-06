@@ -13,7 +13,7 @@ const signInFormSchema = z.object({
 })
 
 const SignInForm: React.FC = () => {
-    const { setToken } = useAuthContext()
+    const { setToken, setUser } = useAuthContext()
     const [mutate] = useSignInMutation()
 
     const form = useForm({
@@ -24,6 +24,7 @@ const SignInForm: React.FC = () => {
         return mutate(data).unwrap()
             .then(res => {
                 setToken(res.accessToken)
+                setUser(res.user)
             })
             .catch((err: string) => {
                 console.log(err)
