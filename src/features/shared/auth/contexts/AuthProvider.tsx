@@ -2,12 +2,17 @@ import { createContext, useContext, useEffect, useLayoutEffect, useState, type R
 // @ts-expect-error import from js file
 import api from "@/api";
 import type { AxiosError, AxiosInstance } from "axios";
+import { useAppDispatch } from "@/state/store";
+import { type User } from "@/features/user/types";
+import { addUser } from "@/state/slices/usersSlice";
 
 const typedApi = api as AxiosInstance
 
 interface AuthContext {
     token?: string | null,
     setToken: React.Dispatch<React.SetStateAction<string | null | undefined>>
+    user?: User | null
+    setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
 }
 
 interface Props {
@@ -28,6 +33,9 @@ export const useAuthContext: () => AuthContext = () => {
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
     const [token, setToken] = useState<string | null>()
+    const [user, setUser] = useState<User | null>()
+
+    const dispatch = useAppDispatch()
 
     useLayoutEffect(() => {
         const authInterceptor = typedApi.interceptors.request.use(config => {
@@ -48,14 +56,16 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
                 const originalRequest = error.config
 
                 if (error.response?.status === 403 && error.response.data.message === "Unauthorized") {
-                    return typedApi.get<{ accessToken: string }>("/api/refreshToken")
+                    return typedApi.get<{ accessToken: string, user: User }>("/api/refreshToken")
                         .then(res => {
                             setToken(res.data.accessToken)
+                            setUser(res.data.user)
 
                             return typedApi(originalRequest!)
                         })
                         .catch(() => {
                             setToken(null)
+                            setUser(null)
                             return Promise.reject(error)
                         })
                 }
@@ -71,22 +81,25 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
         const fetchMe = () => {
             typedApi.get<{
                 accessToken: string | null
-                user: object
+                user: User
             }>("/api/me")
                 .then(res => {
+                    dispatch(addUser(res.data.user))
                     setToken(res.data.accessToken)
+                    setUser(res.data.user)
                 })
                 .catch(err => {
                     console.error("Failed to fetch user data:", err)
                     setToken(null) // Clear token on error
+                    setUser(null)
                 })
         }
 
         fetchMe()
-    }, [])
+    }, [dispatch])
 
     return (
-        <authContext.Provider value={{ token, setToken }}>
+        <authContext.Provider value={{ token, setToken, user, setUser }}>
             {children}
         </authContext.Provider>
     )
