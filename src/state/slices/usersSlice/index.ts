@@ -2,7 +2,7 @@ import type { User } from "@/features/user/types"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 const initialState: {
-    users: object
+    users: Record<string, User>
 } = {
     users: {}
 }
