@@ -2,8 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui"
 import type { User } from "../types"
 
 interface Props {
-    className: string
-    imageOnly: boolean
+    className?: string
+    imageOnly?: boolean
     user: User
 }
 

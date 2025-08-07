@@ -1,15 +1,21 @@
-import { Card, CardContent } from "@/components/ui";
+import { Card, CardContent, Separator } from "@/components/ui";
 import type { ListingForList } from "../types";
 import { DollarSign, Pin, Users } from "lucide-react";
 import ListingCardImages from "./ListingCardImages";
 import { Link } from "react-router-dom";
 import ListingFavoriteButton from "./ListingFavoriteButton";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/state/store";
+import UserAvater from "@/features/user/components/UserAvatar";
 
 interface Props {
     listing: ListingForList
 }
 
 const ListingCard: React.FC<Props> = ({ listing }) => {
+    const { users } = useSelector((state: RootState) => state.users)
+
+    const listingUser = users[listing.userId]
 
     return (
         <Card className="w-[320px]">
@@ -47,6 +53,14 @@ const ListingCard: React.FC<Props> = ({ listing }) => {
                             </span>
                         </span>
                     </div>
+                    {
+                        listingUser && (
+                            <>
+                                <Separator className="my-4" />
+                                <UserAvater user={listingUser} />
+                            </>
+                        )
+                    }
                 </CardContent>
             </Link >
         </Card >
