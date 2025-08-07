@@ -4,14 +4,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignInPage: React.FC = () => {
-    const { token } = useAuthContext();
+    const { token, user } = useAuthContext();
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (token) {
+        if (token && user) {
             navigate("/", { replace: true })
         }
-    }, [token, navigate])
+    }, [token, navigate, user])
 
     return (
         <>
