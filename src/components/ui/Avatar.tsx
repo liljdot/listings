@@ -14,7 +14,7 @@ ref?: React.ForwardedRef<HTMLElement> // remove if error
       data-slot="avatar"
       ref={ref}
       className={cn(
-        "relative flex size-10 shrink-0 overflow-hidden rounded-full",
+        "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
         className
       )}
       {...props}
@@ -32,7 +32,7 @@ ref?: React.ForwardedRef<HTMLImageElement> // remove if error
     <AvatarPrimitive.Image
       data-slot="avatar-image"
       ref={ref}
-      className={cn("aspect-square size-full", className)}
+      className={cn("aspect-square w-full h-full", className)}
       {...props}
     />
   )
@@ -49,7 +49,7 @@ ref?: React.ForwardedRef<HTMLElement>
       data-slot="avatar-fallback"
       ref={ref}
       className={cn(
-        "bg-muted flex size-full items-center justify-center rounded-full",
+        "bg-muted flex h-full w-full items-center justify-center rounded-full",
         className
       )}
       {...props}
