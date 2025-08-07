@@ -1,5 +1,8 @@
+import type { User } from "../user/types"
+
 export interface Listing {
     id: number
+    userId: User["id"]
     name: string
     images: string[]
     maxGuests: number
