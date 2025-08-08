@@ -31,7 +31,7 @@ const Router: React.FC = () => {
                             element: <ListingDetailsPage />
                         },
                         {
-                            path: "/user/:userId",
+                            path: "/profile",
                             element: <ProfilePage />
                         }
                     ],
