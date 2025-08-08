@@ -1,7 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, Separator } from "@/components/ui";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../auth/contexts/AuthProvider";
-import { Laptop, LogOutIcon, Moon, Sun } from "lucide-react";
+import { Laptop, LogOutIcon, Moon, Sun, User } from "lucide-react";
 import { useThemeContext } from "../theme/contexts/ThemeProvider";
 import { useSignOutMutation } from "@/services/api/authApi";
 
@@ -36,6 +36,12 @@ const NavBar: React.FC = () => {
                             </Link>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                                <Link to={"/profile"}>
+                                    <User className="mr-2 h-4 w-4" />
+                                    <span>Profile</span>
+                                </Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={handleSignOut}>
                                 <LogOutIcon className="mr-2 h-4 w-4" />
                                 <span>Sign Out</span>
