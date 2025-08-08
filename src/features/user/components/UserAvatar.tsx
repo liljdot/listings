@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui"
 import type { User } from "../types"
+import { getUserDisplayName } from "../fns"
 
 interface Props {
     className?: string
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const UserAvater: React.FC<Props> = ({ className, imageOnly, user }) => {
-    const displayName = `${user.firstName} ${user.lastName}`
+    const displayName = getUserDisplayName(user)
 
     return (
         <div className="flex flex-row items-center gap-2">
