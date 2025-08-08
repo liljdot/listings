@@ -6,6 +6,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ListingFavoritesPage from "./pages/ListingFavoritesPage";
 import SignInPage from "./pages/SignInPage";
 import RequireAuth from "./features/shared/auth/components/RequireAuth";
+import ProfilePage from "./pages/ProfilePage";
 
 const Router: React.FC = () => {
     const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const Router: React.FC = () => {
                         {
                             path: "/listing/:listingId",
                             element: <ListingDetailsPage />
+                        },
+                        {
+                            path: "/user/:userId",
+                            element: <ProfilePage />
                         }
                     ],
                 },
