@@ -3,12 +3,18 @@ import type { ListingForList } from "../types"
 import { DollarSign, Pin, Users } from "lucide-react";
 import ListingDetailsCardImages from "./ListingDetailsCardImages";
 import ListingFavoriteButton from "./ListingFavoriteButton";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/state/store";
+import UserAvater from "@/features/user/components/UserAvatar";
 
 interface Props {
     listing: ListingForList
 }
 
 const ListingDetailsCard: React.FC<Props> = ({ listing }) => {
+    const { users } = useSelector((state: RootState) => state.users)
+
+    const listingUser = users[listing.userId]
 
     return (
         <>
@@ -43,6 +49,14 @@ const ListingDetailsCard: React.FC<Props> = ({ listing }) => {
                     </div>
                     <ListingFavoriteButton listingId={listing.id} />
                 </div>
+                {
+                    listingUser && (
+                        <>
+                            <Separator className="my-4" />
+                            <UserAvater user={listingUser} />
+                        </>
+                    )
+                }
                 <Separator className="my-4" />
                 <div className="whitespace-pre-line">
                     {listing.description}
