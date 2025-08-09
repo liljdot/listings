@@ -26,6 +26,9 @@ const NavBar: React.FC = () => {
                     Home
                 </Link>
                 <div className="flex-end flex flex-row items-center gap-8">
+                    <Link to={"/listing/create"}>
+                        Create Listing
+                    </Link>
                     <Link to={"/favorites"}>
                         Favorites
                     </Link>
