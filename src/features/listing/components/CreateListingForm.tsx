@@ -1,3 +1,4 @@
+import { useCreateListingMutation } from "@/services/api/listingsApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -21,11 +22,17 @@ const createListingFormSchema = z.object({
 export type CreateListingFormSchemaType = z.infer<typeof createListingFormSchema>
 
 const CreateListingForm: React.FC = () => {
+    const [mutate] = useCreateListingMutation()
+
     const form = useForm({
         resolver: zodResolver(createListingFormSchema),
         defaultValues: {
             maxGuests: 1
         }
+    })
+
+    const onSubmit = form.handleSubmit(data => {
+        return mutate(data).unwrap()
     })
 
     return (
