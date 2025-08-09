@@ -7,6 +7,7 @@ import ListingFavoritesPage from "./pages/ListingFavoritesPage";
 import SignInPage from "./pages/SignInPage";
 import RequireAuth from "./features/shared/auth/components/RequireAuth";
 import ProfilePage from "./pages/ProfilePage";
+import CreateListingPage from "./pages/CreateListingPage";
 
 const Router: React.FC = () => {
     const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const Router: React.FC = () => {
                         {
                             path: "/favorites",
                             element: <ListingFavoritesPage />
+                        },
+                        {
+                            path: "/listing/create",
+                            element: <CreateListingPage />
                         },
                         {
                             path: "/listing/:listingId",
