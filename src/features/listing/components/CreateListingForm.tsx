@@ -18,6 +18,8 @@ const createListingFormSchema = z.object({
     })
 })
 
+export type CreateListingFormSchemaType = z.infer<typeof createListingFormSchema>
+
 const CreateListingForm: React.FC = () => {
     const form = useForm({
         resolver: zodResolver(createListingFormSchema),
