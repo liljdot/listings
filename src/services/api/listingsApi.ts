@@ -4,6 +4,7 @@ import { createApi, type BaseQueryFn } from "@reduxjs/toolkit/query/react"
 import api from "@/api"
 import type { AxiosInstance } from "axios"
 import type { DateRange } from "react-day-picker"
+import type { CreateListingFormSchemaType } from "@/features/listing/components/CreateListingForm"
 
 const typedApi = api as AxiosInstance
 
@@ -16,12 +17,18 @@ interface CustomBaseQueryArgs {
     }
 }
 
-const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs, unknown, unknown> = ({ id, filters }) => {
+const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs | CreateListingFormSchemaType, unknown, unknown> = (data) => {
+    if ("name" in data) {
+        return typedApi.post<ListingForList>("/api/listings/create", data)
+    } // name property is unique in create form schema so will default to creating the listing if true
+
+    const { id, filters } = data // else has type of custom base query args and is ready to get listing
+
     if (!id) {
         return typedApi.get<ListingForList[]>(`/api/listings`, {
             params: filters
         })
-    }
+    } // if no id is posted, will get all listings
 
     return typedApi.get<ListingForList>(`/api/listings/${id}`)
 
@@ -32,14 +39,23 @@ const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs, unknown, unknown> = ({ i
 export const listingsApi = createApi({
     reducerPath: "api/listingsApi",
     baseQuery: customBaseQuery,
+    tagTypes: ["Listings"], // defines tags for each cache iteme. which can then be used for invalidation
     endpoints: builder => ({
         getSingleListing: builder.query<ListingForList, ListingForList["id"]>({
             query: id => ({ id })
         }),
         getListings: builder.query<ListingForList[], CustomBaseQueryArgs["filters"]>({
-            query: filters => ({ filters })
+            query: filters => ({ filters }),
+            providesTags:(...[, , arg, ])  => ([{
+                type: "Listings",
+                id: JSON.stringify(arg)
+            }]), // defines tags associated with this endpoint
+        }),
+        createListing: builder.mutation<ListingForList, CreateListingFormSchemaType>({
+            query: data => data, 
+            invalidatesTags: [{type: "Listings"}]
         })
     })
 })
 
-export const { useGetSingleListingQuery, useGetListingsQuery } = listingsApi
+export const { useGetSingleListingQuery, useGetListingsQuery, useCreateListingMutation } = listingsApi
