@@ -67,6 +67,13 @@ const ImagesInput = <T extends FieldValues>({
                     <CarouselPrevious />
                     <CarouselNext />
                 </Carousel>
+                {
+                    form.fieldState.error && (
+                        <div className="text-center text-red-500">
+                            {form.fieldState.error.message}
+                        </div>
+                    )
+                }
             </div>
         </>
     )
