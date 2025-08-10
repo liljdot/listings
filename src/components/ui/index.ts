@@ -7,6 +7,8 @@ export * from "./DatePicker";
 export * from "./DropdownMenu"
 export * from './Input';
 export * from "./Popover" 
+export * from "./Select"
+export * from "./SelectInput"
 export * from "./separator"
 export * from "./Spinner"
 export * from "./Stepper"
