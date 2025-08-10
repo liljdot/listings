@@ -2,7 +2,7 @@ import type { ListingForList } from "@/features/listing/types"
 import { createApi, type BaseQueryFn } from "@reduxjs/toolkit/query/react"
 // @ts-expect-error import from js file
 import api from "@/api"
-import type { AxiosInstance } from "axios"
+import type { AxiosError, AxiosInstance } from "axios"
 import type { DateRange } from "react-day-picker"
 import type { CreateListingFormSchemaType } from "@/features/listing/components/CreateListingForm"
 
@@ -20,6 +20,9 @@ interface CustomBaseQueryArgs {
 const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs | CreateListingFormSchemaType, unknown, unknown> = (data) => {
     if ("name" in data) {
         return typedApi.post<ListingForList>("/api/listings/create", data)
+            .catch((err: AxiosError<{ message: string }>) => {
+                return { error: err.response?.data.message, status: err.status }
+            })
     } // name property is unique in create form schema so will default to creating the listing if true
 
     const { id, filters } = data // else has type of custom base query args and is ready to get listing
@@ -46,14 +49,14 @@ export const listingsApi = createApi({
         }),
         getListings: builder.query<ListingForList[], CustomBaseQueryArgs["filters"]>({
             query: filters => ({ filters }),
-            providesTags:(...[, , arg, ])  => ([{
+            providesTags: (...[, , arg,]) => ([{
                 type: "Listings",
                 id: JSON.stringify(arg)
             }]), // defines tags associated with this endpoint
         }),
         createListing: builder.mutation<ListingForList, CreateListingFormSchemaType>({
-            query: data => data, 
-            invalidatesTags: [{type: "Listings"}]
+            query: data => data,
+            invalidatesTags: [{ type: "Listings" }]
         })
     })
 })
