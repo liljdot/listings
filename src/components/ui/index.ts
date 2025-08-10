@@ -5,6 +5,7 @@ export * from './Card';
 export * from "./Carousel"
 export * from "./DatePicker";
 export * from "./DropdownMenu"
+export * from "./ImagesInput"
 export * from './Input';
 export * from "./Popover" 
 export * from "./Select"
