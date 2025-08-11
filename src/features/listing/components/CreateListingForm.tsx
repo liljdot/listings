@@ -93,6 +93,11 @@ const CreateListingForm: React.FC = () => {
                             control={form.control}
                             name={"images"}
                         />
+                        <TextInput
+                            control={form.control}
+                            name={"price"}
+                            placeholder="Price per night"
+                        />
                     </Form>
                 </CardContent>
             </Card>
