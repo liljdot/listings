@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, Separator } from "@/components/ui";
 import Form from "@/components/ui/Form";
+import ImagesInput from "@/components/ui/ImagesInput";
 import SelectInput from "@/components/ui/SelectInput";
 import TextInput from "@/components/ui/TextInput";
 import { useCreateListingMutation } from "@/services/api/listingsApi";
@@ -50,8 +51,8 @@ const CreateListingForm: React.FC = () => {
     })
 
     const locationOptions = [
-        {value: "1", label: "Paris"},
-        {value: "2", label: "London"}
+        { value: "1", label: "Paris" },
+        { value: "2", label: "London" }
     ]
 
     return (
@@ -87,6 +88,10 @@ const CreateListingForm: React.FC = () => {
                             name={"locationId"}
                             options={locationOptions}
                             placeholder="Select a location"
+                        />
+                        <ImagesInput
+                            control={form.control}
+                            name={"images"}
                         />
                     </Form>
                 </CardContent>
