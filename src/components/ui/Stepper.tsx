@@ -3,14 +3,14 @@ import * as React from 'react';
 import { Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
-interface Props {
+export interface StepperProps {
     className?: string
     label: string
     onChange: (value: number) => void
     value: number
 }
 
-const Stepper: React.FC<Props> = ({ className, label, onChange, value, ...props }) => {
+const Stepper: React.FC<StepperProps> = ({ className, label, onChange, value, ...props }) => {
     return (
       <div
         className={cn(
