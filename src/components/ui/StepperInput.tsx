@@ -1,7 +1,7 @@
 import { useController, type Control, type FieldPath, type FieldValues } from "react-hook-form";
 import { Stepper, type StepperProps } from "./Stepper";
 
-interface Props<T extends FieldValues> extends StepperProps {
+interface Props<T extends FieldValues> extends Omit<StepperProps, "value" | "onChange"> {
     control: Control<T>
     name: FieldPath<T>
 }
