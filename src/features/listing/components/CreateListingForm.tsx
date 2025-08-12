@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, Separator } from "@/components/ui";
 import Form from "@/components/ui/Form";
 import ImagesInput from "@/components/ui/ImagesInput";
 import SelectInput from "@/components/ui/SelectInput";
+import StepperInput from "@/components/ui/StepperInput";
 import TextInput from "@/components/ui/TextInput";
 import { useCreateListingMutation } from "@/services/api/listingsApi";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -97,6 +98,11 @@ const CreateListingForm: React.FC = () => {
                             control={form.control}
                             name={"price"}
                             placeholder="Price per night"
+                        />
+                        <StepperInput
+                            control={form.control}
+                            name={"maxGuests"}
+                            label="guest"
                         />
                     </Form>
                 </CardContent>
