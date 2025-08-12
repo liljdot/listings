@@ -108,7 +108,7 @@ const CreateListingForm: React.FC = () => {
                         <DateRangeInput
                             control={form.control}
                             name={"availability"}
-                            placeholder="a"
+                            placeholder="Select availability"
                             minDate={new Date()}
                         />
                     </Form>
