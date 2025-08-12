@@ -19,7 +19,6 @@ const DateRangeInput = <T extends FieldValues>({
                 {...props}
                 value={form.field.value}
                 onChange={form.field.onChange}
-                minDate={new Date()}
             />
             {
                 form.fieldState.error && (
