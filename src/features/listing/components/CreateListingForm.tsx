@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, Separator } from "@/components/ui";
+import DateRangeInput from "@/components/ui/DateRangeInput";
 import Form from "@/components/ui/Form";
 import ImagesInput from "@/components/ui/ImagesInput";
 import SelectInput from "@/components/ui/SelectInput";
@@ -103,6 +104,12 @@ const CreateListingForm: React.FC = () => {
                             control={form.control}
                             name={"maxGuests"}
                             label="guest"
+                        />
+                        <DateRangeInput
+                            control={form.control}
+                            name={"availability"}
+                            placeholder="a"
+                            minDate={new Date()}
                         />
                     </Form>
                 </CardContent>
