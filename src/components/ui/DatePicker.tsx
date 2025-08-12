@@ -11,7 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import type { DateRange } from 'react-day-picker';
 
-interface Props {
+export interface DateRangePickerProps {
     className?: string
     minDate: Date
     maxDate?: Date
@@ -20,7 +20,7 @@ interface Props {
     value?: DateRange
 }
 
-export const DateRangePicker: React.FC<Props> = ({
+export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     className,
     minDate,
     maxDate,
