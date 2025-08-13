@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Separator } from "@/components/ui";
+import { Button, Card, CardContent, CardHeader, Separator, Spinner } from "@/components/ui";
 import DateRangeInput from "@/components/ui/DateRangeInput";
 import Form from "@/components/ui/Form";
 import ImagesInput from "@/components/ui/ImagesInput";
@@ -30,7 +30,7 @@ const createListingFormSchema = z.object({
 export type CreateListingFormSchemaType = z.infer<typeof createListingFormSchema>
 
 const CreateListingForm: React.FC = () => {
-    const [mutate] = useCreateListingMutation()
+    const [mutate, createListingMutation] = useCreateListingMutation()
 
     const navigate = useNavigate()
 
@@ -43,7 +43,7 @@ const CreateListingForm: React.FC = () => {
 
     const onSubmit = form.handleSubmit(data => {
         return mutate(data).unwrap()
-            .then(res => navigate(`/listings/${res.id}`))
+            .then(res => navigate(`/listing/${res.id}`))
             .catch((err: string) => {
                 console.log(err)
                 form.setError("root", {
@@ -111,6 +111,16 @@ const CreateListingForm: React.FC = () => {
                             placeholder="Select availability"
                             minDate={new Date()}
                         />
+                        <Button
+                            type="submit"
+                            disabled={createListingMutation.isLoading}
+                        >
+                            {
+                                createListingMutation.isLoading
+                                    ? <Spinner />
+                                    : "Create Listing"
+                            }
+                        </Button>
                     </Form>
                 </CardContent>
             </Card>
