@@ -7,6 +7,7 @@ import ListingFavoriteButton from "./ListingFavoriteButton";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/state/store";
 import UserAvater from "@/features/user/components/UserAvatar";
+import ListingRatingStars from "./ListingRatingStars";
 
 interface Props {
     listing: ListingForList
@@ -24,6 +25,10 @@ const ListingCard: React.FC<Props> = ({ listing }) => {
                 <ListingFavoriteButton
                     className="absolute right-4 top-4"
                     listingId={listing.id}
+                />
+                <ListingRatingStars
+                    className="abslolute left-4 bottom-4"
+                    listing={listing}
                 />
             </div>
             <Link to={`/listing/${listing.id}`}>
