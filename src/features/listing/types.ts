@@ -8,6 +8,7 @@ export interface Listing {
     maxGuests: number
     price: number
     description: string
+    rating: number
 }
 
 interface ListingWithLocation extends Listing {
