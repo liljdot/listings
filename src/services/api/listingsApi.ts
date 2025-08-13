@@ -19,9 +19,9 @@ interface CustomBaseQueryArgs {
 
 const customBaseQuery: BaseQueryFn<CustomBaseQueryArgs | CreateListingFormSchemaType, unknown, unknown> = (data) => {
     if ("name" in data) {
-        return typedApi.post<ListingForList>("/api/listings/create", data)
+        return typedApi.post<ListingForList>("/api/listings", data)
             .catch((err: AxiosError<{ message: string }>) => {
-                return { error: err.response?.data.message, status: err.status }
+                return { error: err.message, status: err.status }
             })
     } // name property is unique in create form schema so will default to creating the listing if true
 
