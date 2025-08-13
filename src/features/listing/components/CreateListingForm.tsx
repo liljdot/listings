@@ -53,8 +53,8 @@ const CreateListingForm: React.FC = () => {
     })
 
     const locationOptions = [
-        { value: "1", label: "Paris" },
-        { value: "2", label: "London" }
+        { value: "1", label: "London" },
+        { value: "2", label: "Paris" }
     ]
 
     return (
