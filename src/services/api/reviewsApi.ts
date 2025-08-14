@@ -14,7 +14,7 @@ const customBaseQuery: BaseQueryFn<Listing["id"], unknown, unknown> = (data) => 
     })
 }
 
-const reviewsApi = createApi({
+export const reviewsApi = createApi({
     reducerPath: "api/reviewsApi",
     baseQuery: customBaseQuery,
     tagTypes: ["Reviews"],

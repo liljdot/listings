@@ -4,15 +4,17 @@ import { listingsSliceReducer } from './slices/listingsSlices';
 import { listingsApi } from '@/services/api/listingsApi';
 import { authApi } from '@/services/api/authApi';
 import { usersSliceReducer } from './slices/usersSlice';
+import { reviewsApi } from '@/services/api/reviewsApi';
 
 const store = configureStore({
     reducer: {
         listings: listingsSliceReducer,
         users: usersSliceReducer,
         [listingsApi.reducerPath]: listingsApi.reducer,
-        [authApi.reducerPath]: authApi.reducer
+        [authApi.reducerPath]: authApi.reducer,
+        [reviewsApi.reducerPath]: reviewsApi.reducer
     },
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(listingsApi.middleware, authApi.middleware)
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(listingsApi.middleware, authApi.middleware, reviewsApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>
