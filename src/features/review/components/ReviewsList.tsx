@@ -12,7 +12,7 @@ const ReviewsList: React.FC<Props> = ({ reviews }) => {
             <div className="flex flex-col gap-4">
                 {
                     reviews.length
-                        ? reviews.map(review => (<ReviewCard review={review} />))
+                        ? reviews.map(review => (<ReviewCard key={review.id} review={review} />))
                         : <p>No reviews found.</p>
                 }
             </div>
