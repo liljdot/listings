@@ -16,7 +16,7 @@ const ReviewCardStars: React.FC<Props> = ({ review, className }) => {
                 className
             )}>
                 {
-                    [...Array(5).map((...[, index]) => (
+                    [...Array(5)].map((...[, index]) => (
                         <Star
                             key={index}
                             className={cn(
@@ -24,7 +24,7 @@ const ReviewCardStars: React.FC<Props> = ({ review, className }) => {
                                 { "fill-star text-star": index < review.rating }
                             )}
                         />
-                    ))]
+                    ))
                 }
             </div>
         </>
