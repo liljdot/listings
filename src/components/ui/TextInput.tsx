@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 import { Input } from "./Input";
-import { useController, type Control,  type FieldPath,  type FieldValues } from "react-hook-form";
+import { useController, type Control, type FieldPath, type FieldValues } from "react-hook-form";
 
 interface Props<T extends FieldValues> extends ComponentProps<"input"> {
     control: Control<T>
@@ -20,6 +20,7 @@ const TextInput = <T extends FieldValues>({
     return (
         <div>
             <Input
+                name={name}
                 type={type}
                 onChange={form.field.onChange}
                 onBlur={form.field.onBlur}
