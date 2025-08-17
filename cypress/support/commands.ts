@@ -11,7 +11,7 @@
 //
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', (email: string, password: string) => {
+Cypress.Commands.add("login", (email: string, password: string) => {
     cy.visit("http://localhost:5173/signin")
 
     cy.get("input[name='email']").type(email)
