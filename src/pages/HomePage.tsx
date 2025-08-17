@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
 
     return (
         <>
-            <div className="container py-4">
+            <div className="container py-4" data-testid="homepage">
                 <div className="mb-4">
                     <ListingFilters onChange={handleFiltersChange} />
                     <Separator className="my-4" />
