@@ -9,7 +9,7 @@ const ListingList: React.FC<Props> = ({ listings }) => {
 
     return (
         <>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4" data-testid="listing-list">
                 {
                     listings.length
                         ? listings.map(listing => (
