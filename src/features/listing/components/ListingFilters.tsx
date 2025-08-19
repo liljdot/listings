@@ -24,6 +24,7 @@ const ListingFilters: React.FC<Props> = ({ onChange }) => {
         <>
             <div className="flex flex-row items-center justify-center gap-2" data-testid="listing-filters">
                 <Input
+                    name="search"
                     className="w-[400px]"
                     placeholder="Search destinations"
                     value={search}
