@@ -24,5 +24,13 @@ describe('Home Page', () => {
 
     const expectedListingsCount = 6
     cy.get('[data-testid="listing-list"] > *').should("have.length", expectedListingsCount)
+
+    // increment the guest filter to 16
+    for (let i = 0; i < 16; i++) {
+      cy.get('[data-testid="stepper-increment"]').click()
+    }
+    cy.get('[data-testid="listing-filters-submit"]').click()
+
+    cy.get('[data-testid="listing-list"] > *').should("have.length", 1)
   })
 });
