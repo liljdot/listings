@@ -17,4 +17,12 @@ describe('Home Page', () => {
     const expectedListingsCount = 12
     cy.get('[data-testid="listing-list"] > *').should("have.length", expectedListingsCount)
   })
+
+  it("filters listings correctly", () => {
+    cy.get('[data-testid="listing-filters"] input[name="search"]').type("Paris")
+    cy.get('[data-testid="listing-filters-submit"]').click()
+
+    const expectedListingsCount = 6
+    cy.get('[data-testid="listing-list"] > *').should("have.length", expectedListingsCount)
+  })
 });
