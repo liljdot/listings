@@ -23,6 +23,7 @@ const Stepper: React.FC<StepperProps> = ({ className, label, onChange, value, ..
           disabled={value === 0}
           variant='link'
           onClick={() => onChange(value - 1)}
+          data-testid='stepper-decrement'
         >
           -
         </Button>
@@ -38,6 +39,7 @@ const Stepper: React.FC<StepperProps> = ({ className, label, onChange, value, ..
           disabled={value === 100}
           variant='link'
           onClick={() => onChange(value + 1)}
+          data-testid='stepper-increment'
         >
           +
         </Button>
