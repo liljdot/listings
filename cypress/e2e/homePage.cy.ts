@@ -33,4 +33,12 @@ describe('Home Page', () => {
 
     cy.get('[data-testid="listing-list"] > *').should("have.length", 1)
   })
+
+  it("handles no listings scenario", () => {
+    cy.get('[data-testid="listing-filters"] input[name="search"]').type("Parininos")
+    cy.get('[data-testid="listing-filters-submit"]').click()
+
+    cy.get('[data-testid="listing-list"] > *').should("have.length", 0)
+    cy.contains("No listings found").should("be.visible")
+  })
 });
