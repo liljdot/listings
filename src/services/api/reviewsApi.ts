@@ -3,7 +3,7 @@ import { createApi, type BaseQueryFn } from "@reduxjs/toolkit/query/react";
 // @ts-expect-error import from js file
 import api from "@/api"
 import type { AxiosInstance } from "axios";
-import type { Review, ReviewForList } from "@/features/review/types";
+import type { ReviewForList } from "@/features/review/types";
 
 const typedApi = api as AxiosInstance
 
