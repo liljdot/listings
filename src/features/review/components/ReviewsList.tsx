@@ -1,8 +1,8 @@
-import type { Review } from "../types";
+import type { ReviewForList } from "../types";
 import ReviewCard from "./ReviewCard";
 
 interface Props {
-    reviews: Review[]
+    reviews: ReviewForList[]
 }
 
 const ReviewsList: React.FC<Props> = ({ reviews }) => {
