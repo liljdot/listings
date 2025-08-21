@@ -9,7 +9,7 @@ const typedApi = api as AxiosInstance
 
 const customBaseQuery: BaseQueryFn<Listing["id"], unknown, unknown> = (data) => {
 
-    return typedApi.get<Review[]>("/api/reviews", {
+    return typedApi.get<ReviewForList[]>("/api/reviews", {
         params: { listingId: data }
     })
 }
