@@ -7,8 +7,8 @@ A modern web application for discovering and listing hospitality locations such 
 ## 🚀 Live Demo
 
 [View the deployed app here](https://listings-nine-neon.vercel.app/)
-Email: jehu@demo.io
-password: password
+- Email: jehu@demo.io
+- password: password
 
 ---
 
